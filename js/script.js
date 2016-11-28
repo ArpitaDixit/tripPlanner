@@ -1,9 +1,13 @@
  var wayPts=[];
  var latLngPlaces=[];
+ var place_ids=[];
+ var address=[];
  var boxCount = 1;
  var map;
  var origin_id;
  var dest_id;
+ var lastDest;
+ var lastBoxNo;
 function initMap() {       
         var directionsService = new google.maps.DirectionsService;
         var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -35,26 +39,34 @@ function getPlaces(pac_input){
             latitude = place.geometry.location.lat();
             longitude = place.geometry.location.lng();
             var presentBox=pac_input.substring(9,10);
-            latLngPlaces.splice(parseInt(presentBox),0,{latitude,longitude});
-            if(parseInt(presentBox)==0)
-              origin_id=place.place_id;
-            else
-            if(parseInt(presentBox)==1)
-              dest_id=place.place_id;
-            else
-            wayPts.splice(parseInt(presentBox),0,{location:document.getElementById(pac_input).value, stopover: true});
+            latLngPlaces.splice(parseInt(presentBox),1,{latitude,longitude});
+            if(parseInt(presentBox)==0){
+              place_ids.splice(0,0,place.place_id);
+              address.splice(parseInt(presentBox),1,document.getElementById(pac_input).value);
+            }
+            else {            
+            
+            place_ids.splice(parseInt(presentBox),1,place.place_id);
+            address.splice(parseInt(presentBox),1,document.getElementById(pac_input).value);             
+            if(lastBoxNo==(parseInt(presentBox)-1) || parseInt(presentBox)==1){              
+              if(parseInt(presentBox)!=1)
+              wayPts.splice(lastBoxNo,1,{location:lastDest, stopover: true});
+              lastDest=document.getElementById(pac_input).value;
+              lastBoxNo=parseInt(presentBox);
+            }
             console.log("Lat - " + latitude + " Long - " + longitude +" boxno -"+presentBox );
             console.log(wayPts);                      
             console.log(latLngPlaces);
+            
+          }
         });
 }
 
 //This function calculates the route and places markers on the recieved input... This is final function dont change anything in this..  
-      function calculateAndDisplayRoute(directionsService, directionsDisplay) {              
-        
+      function calculateAndDisplayRoute(directionsService, directionsDisplay) {                      
         directionsService.route({
-          origin: {'placeId': origin_id},
-          destination: {'placeId': dest_id},
+          origin: {'placeId': place_ids[0]},
+          destination: {'placeId': place_ids[boxCount]},
           waypoints: wayPts,
           optimizeWaypoints: true,
           travelMode: 'DRIVING'
@@ -70,10 +82,12 @@ function getPlaces(pac_input){
 $(function () {  
     $(".add-button").bind("click", function () {
       boxCount++;
+
         var div = $("<div />");
-        div.html('<input type="text" class="form-control address" id="pac-input'+ boxCount +'" onfocus="getPlaces(this.id)" placeholder="Intermediate Destination" />&nbsp;' +
+        div.html('<input type="text" class="form-control address" id="pac-input'+ boxCount +'" onfocus="getPlaces(this.id)" placeholder="New Destination" />&nbsp;' +
             '<input type="button" value="X" class="btn btn-primary text-center remove" id="remove'+boxCount +'" />');
         $(".address-boxes").append(div);
+
     });    
     $("body").on("click", ".remove", function () {     
       boxCount--;            
