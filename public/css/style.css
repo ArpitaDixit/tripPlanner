@@ -1,0 +1,52 @@
+body{
+	background-color: #2F79B9;
+	color: white;
+}
+h1{
+	font-size: 45px;
+	font-family: 'Acme', sans-serif;
+}
+
+.sub-heading{
+	font-family: 'Josefin Slab', serif;
+}
+
+.customize-heading{
+	font-family: 'Acme', sans-serif;
+}
+
+.details{
+	background-color: white;
+	padding-top: 4px;
+	padding-left: 40px;
+	padding-right: 50px;
+	padding-bottom: 30px;
+	border-radius: 8px;
+}
+
+.details-body{
+	background-color: white;
+	padding-top: 30px;
+	border-radius: 8px;
+}
+
+.address{
+	margin: 16px 0px;
+}
+
+.option-text{
+	margin-top: 27px;
+}
+
+.add-button{
+	margin-bottom: 27px;
+}
+
+#map {
+        height: 350px;
+        margin-top: 10px;
+}
+
+.go-button{
+	margin: 45px 0px;
+}
