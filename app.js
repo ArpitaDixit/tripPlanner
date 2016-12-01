@@ -1,10 +1,12 @@
 var express = require("express");
 var Uber = require('node-uber');
 var path = require("path");
+var bodyParser = require('body-parser');
 
 var app = express();
 app.use(express.static(path.join(__dirname,'public')));
-
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 var uber = new Uber({
     client_id: 'lGMT26zFN4YbgRPNSWR17uzAmWAo6IoT',
@@ -39,7 +41,7 @@ app.post("/results.html", function (req, res) {
     // uber.estimates.getPriceForRoute(37.338208, -121.886329, 37.3352, -121.8811, function (err, response) {
     //     console.log(response);
     // });
-    console.log(req);
+    console.log(req.body);
     res.sendFile(path.join(__dirname+"/views/results.html"));
 });
 

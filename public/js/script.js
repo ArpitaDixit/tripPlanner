@@ -99,6 +99,19 @@ $(function () {
       $.get("results");
     });
 
-    
+    // $('#trip-form').submit(function(){ //listen for submit event
+
+    //         var params = latLngPlaces;
+
+    //         $.each(params, function(i,param){
+    //             $('<input />').attr('type', 'hidden')
+    //                         .attr('name', 'place' + i)
+    //                         .attr('latitude', param.latitude)
+    //                         .attr('longitude', param.longitude)
+    //                         .appendTo('#weatherForm');
+
+    //         });
+    //         return true;
+    //     });
 
 });
