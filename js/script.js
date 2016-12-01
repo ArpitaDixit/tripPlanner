@@ -8,6 +8,8 @@
  var dest_id;
  var lastDest;
  var lastBoxNo;
+
+
 function initMap() {       
         var directionsService = new google.maps.DirectionsService;
         var directionsDisplay = new google.maps.DirectionsRenderer;
@@ -93,4 +95,10 @@ $(function () {
       boxCount--;            
         $(this).closest("div").remove();
     });
+
+    $(".result-button").click(function(){
+      console.log("Hey");
+      $.get("results");
+    });
+
 });

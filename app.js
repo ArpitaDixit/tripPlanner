@@ -35,11 +35,11 @@ app.get("/success", function (req, res) {
     res.sendFile(path.join(__dirname+"/views/index.html"));
 });
 
-app.get("/results", function (req, res) {
-    uber.estimates.getPriceForRoute(37.338208, -121.886329, 37.3352, -121.8811, function (err, response) {
-        console.log(response);
-    });
-
+app.post("/results.html", function (req, res) {
+    // uber.estimates.getPriceForRoute(37.338208, -121.886329, 37.3352, -121.8811, function (err, response) {
+    //     console.log(response);
+    // });
+    console.log(req);
     res.sendFile(path.join(__dirname+"/views/results.html"));
 });
 
@@ -47,10 +47,6 @@ app.get('/', function(request, response) {
     var url = uber.getAuthorizeUrl(['history','profile', 'request', 'places', 'all_trips']);
     response.redirect(url);
 });
-
-/*app.get("/", function (req, res) {
-    res.send("Hello World");
-});*/
 
 app.listen(5000, function () {
     console.log("Path Finder started at port 5000");

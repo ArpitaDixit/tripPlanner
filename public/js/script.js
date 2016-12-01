@@ -93,4 +93,12 @@ $(function () {
       boxCount--;            
         $(this).closest("div").remove();
     });
+
+    $(".result-button").click(function(){
+      console.log("Hey");
+      $.get("results");
+    });
+
+    
+
 });

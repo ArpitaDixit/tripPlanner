@@ -18,27 +18,29 @@
 		<div class="row text-center customize-heading">
 			<h3>Customize your options</h3>
 		</div>
-		<div class="row details-body">
-			<div class="col-sm-4">
-				<div class="address-boxes">
-					<input type="text" class="form-control address" id="pac-input0" onfocus="getPlaces(this.id)" placeholder="Source Address">
-					<input type="text" class="form-control address" id="pac-input1" onfocus="getPlaces(this.id)" placeholder="Destination">
+		<form method=POST action="results.html">
+			<div class="row details-body">
+				<div class="col-sm-4">
+					<div class="address-boxes">
+						<input type="text" class="form-control address" id="pac-input0" onfocus="getPlaces(this.id)" placeholder="Source Address">
+						<input type="text" class="form-control address" id="pac-input1" onfocus="getPlaces(this.id)" placeholder="Destination">
+					</div>
+					<button type="button" class="btn btn-primary text-center add-button" ><strong>+</strong> new Destination</button>
 				</div>
-				<button type="button" class="btn btn-primary text-center add-button" ><strong>+</strong> new Destination</button>
+				<div class="col-sm-2 text-center text-muted options">
+					<p>Weather Report</p>
+					<input type="checkbox" class="option-button" checked data-toggle="toggle" >
+					<p class="option-text">Yelp Suggestions</p>
+					<input type="checkbox" class="option-button" checked data-toggle="toggle">				
+					<p class="option-text">Other Places Around</p>
+					<input type="checkbox" class="option-button" checked data-toggle="toggle">
+					<p><button type="button" id="submit" class="btn btn-primary text-center go-button">Fetch Results</button><p>
+					<p><button type="sumbit" id="res" class="btn btn-primary text-center result-button">Get Results</button><p>
+				</div>
+				<div class="col-sm-6" id="map">				
+				</div>
 			</div>
-			<div class="col-sm-2 text-center text-muted options">
-				<p>Weather Report</p>
-				<input type="checkbox" class="option-button" checked data-toggle="toggle" >
-				<p class="option-text">Yelp Suggestions</p>
-				<input type="checkbox" class="option-button" checked data-toggle="toggle">				
-				<p class="option-text">Other Places Around</p>
-				<input type="checkbox" class="option-button" checked data-toggle="toggle">
-				<p><button type="button" id="submit" class="btn btn-primary text-center go-button">Fetch Results</button><p>
-				<p><button type="button" id="submit" class="btn btn-primary text-center result-button" onclick="window.location.href='results'">Get Results</button><p>
-			</div>
-			<div class="col-sm-6" id="map">				
-			</div>
-		</div>
+		</form>
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
