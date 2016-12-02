@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Trip Planner</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Acme|Josefin+Slab" rel="stylesheet">
+	<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/style.css">       
+    </script>
+</head>
+<body>
+	<div class="container text-center">
+		<h1>Trip Planner</h1>
+		<p class="lead sub-heading">Plan your trip to be cheapest</p>
+	</div>
+	
+	<div class="container details text-primary">
+		<div class="row text-center customize-heading">
+			<h3>Customize your options</h3>
+		</div>
+		<form id="trip-form" method=POST action="results.html" name="trip-form">
+			<div class="row details-body">
+				<div class="col-sm-4">
+					<div class="address-boxes">
+						<input type="text" class="form-control address" id="pac-input0" onfocus="getPlaces(this.id)" placeholder="Source Address" name="place1">
+						<input type="text" class="form-control address" id="pac-input1" onfocus="getPlaces(this.id)" placeholder="Destination" name="place2">
+					</div>
+					<button type="button" class="btn btn-primary text-center add-button" ><strong>+</strong> new Destination</button>
+				</div>
+				<div class="col-sm-2 text-center text-muted options"  value="true">
+					<p>Weather Report</p>
+					<input type="checkbox" class="option-button" checked data-toggle="toggle" name="weather" value="true">
+					<p class="option-text">Yelp Suggestions</p>
+					<input type="checkbox" class="option-button" checked data-toggle="toggle" name="Yelp" value="true">				
+					<p class="option-text">Other Places Around</p>
+					<input type="checkbox" class="option-button" name="other" checked data-toggle="toggle">
+					<p><button type="button" id="submit" class="btn btn-primary text-center go-button">Fetch Results</button><p>
+					<p><button type="sumbit" id="res" class="btn btn-primary text-center result-button">Get Results</button><p>
+				</div>
+				<div class="col-sm-6" id="map">				
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+	<script type="text/javascript" src="/js/script.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFGOGmf-1DTREZJoP9Si319k1hnUWZXTw&callback=initMap&libraries=places"></script>
+	
+	</body>
+</html>
