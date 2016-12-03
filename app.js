@@ -111,17 +111,18 @@ app.post("/results.html", function (req, res) {
                 console.log(dest);
                 price=UberModule.getUberPrice(src,dest);         
                 uberPrices.push(price);
-                uberCount++;
-                uberEmitter.emit('gotPrice', uberPrices, uberCount);        
+                /*uberCount++;
+                uberEmitter.emit('gotPrice', uberPrices, uberCount);        */
             }
-            
+            /*
             uberEmitter.on('gotPrice', function(uberPrices, uberCount) {
             if(coordinates.length == uberCount){
             console.log("123");
             console.log(uberPrices, places);
             }
-            });
+            });*/
             //getting weather for all places
+            console.log(uberPrices);  
             for (i = 0; i < places.length; i++) {
                 var place = places[i];
                 weather.getWeather(place);

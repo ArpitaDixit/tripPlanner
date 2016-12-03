@@ -30,6 +30,8 @@ var uber = new Uber({
 function getUberPrice(coordSrc,coordDest) {
     uber.estimates.getPriceForRoute(coordSrc.latitude, coordSrc.longitude, coordDest.latitude, coordDest.longitude, function (err, response) {
         data=filterJSON(response);
+        console.log("---------------------------------------------");
+        console.log("new source to new destination");
         console.log(data);
     });
 console.log("done");
