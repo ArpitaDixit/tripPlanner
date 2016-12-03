@@ -11,8 +11,11 @@ var weather=require("./weather");
 var coordinates = [];
 var placesLength;
 var count = 0;
+var uberCount = 0;
+var uberPrices=[];
 
 const myEmitter = new EventEmitter();
+const uberEmitter = new EventEmitter();
 
 var options = {
     provider: 'google',
@@ -74,13 +77,14 @@ app.get("/success", function (req, res) {
 app.post("/results.html", function (req, res) {
     // uber.estimates.getPriceForRoute(37.338208, -121.886329, 37.3352, -121.8811, function (err, response) {
     //     console.log(response);
-    // });
-
+    // });    
     var places = req.body.places;
     placesLength = places.length;
     console.log(places);
 
     for (i = 0; i < places.length; i++) {
+        console.log("places");
+
         var place = places[i];
         geocoder.geocode(place, function(err, res) {
             var coordinate={latitude:res[0]["latitude"],longitude:res[0]["longitude"]};
@@ -95,11 +99,34 @@ app.post("/results.html", function (req, res) {
             console.log(coordinates, places);
             //Write function calls here
             //---------
+            //getting uber price
+            var price;
+            var i=0;
+            for (i = 1; i <= coordinates.length-1; i++) {
+                var src = coordinates[i-1];
+                console.log("src");                
+                console.log(src);                
+                var dest = coordinates[i];   
+                console.log("des");                
+                console.log(dest);
+                price=UberModule.getUberPrice(src,dest);         
+                uberPrices.push(price);
+                uberCount++;
+                uberEmitter.emit('gotPrice', uberPrices, uberCount);        
+            }
+            
+            uberEmitter.on('gotPrice', function(uberPrices, uberCount) {
+            if(coordinates.length == uberCount){
+            console.log("123");
+            console.log(uberPrices, places);
+            }
+            });
             //getting weather for all places
             for (i = 0; i < places.length; i++) {
                 var place = places[i];
                 weather.getWeather(place);
             }
+
            /* uber.estimates.getPriceForRoute(coordinates[0].latitude, coordinates[0].longitude, coordinates[1].latitude, coordinates[1].longitude, function (err, response) {
                 console.log(response);
             });*/
