@@ -8,6 +8,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "express-ejs-layouts": "^2.2.0",
     "node-lyft": "0.0.2",

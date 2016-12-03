@@ -6,6 +6,7 @@ var NodeGeocoder = require('node-geocoder');
 var geocoder = NodeGeocoder(options);
 const EventEmitter = require('events');
 var UberModule = require("./uber");
+var weather=require("./weather");
 
 var coordinates = [];
 var placesLength;
@@ -27,6 +28,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 var uber = new Uber({
+
+/*
+>>>>>>> origin/master
     client_id: 'lGMT26zFN4YbgRPNSWR17uzAmWAo6IoT',
     client_secret: 'nTekbYYzAgC2KhZc7q4e9aPWVO5kwIXig_Bq8jZN',
     server_token: 'jvHZM2BCWNP4IcpRX2crSOoX8HpXb9vbCqCV9IMf',
@@ -34,6 +38,17 @@ var uber = new Uber({
     name: 'ProjectTestApp',
     language: 'en_US', // optional, defaults to en_US
     sandbox: true // optional, defaults to false
+<<<<<<< HEAD
+
+=======
+*/
+    client_id: 'dLLuaHaTUPqusPd5oDsk4dNxXLAq7P9y',
+    client_secret: 'RLFm-on4Eyg7QKtQ1ne3pIEpLVi4FCqrCSAwzNDe',
+    server_token: 'DvXtkPFZjeub-qIDGqE477hh_PvzC7veCDWwoiza',
+    redirect_uri: 'http://localhost:5000/api/callback',
+    name: 'myapp3094',
+    language: 'en_US', // optional, defaults to en_US
+    sandbox: true      // optional, defaults to false
 
 });
 
@@ -60,6 +75,7 @@ app.post("/results.html", function (req, res) {
     // uber.estimates.getPriceForRoute(37.338208, -121.886329, 37.3352, -121.8811, function (err, response) {
     //     console.log(response);
     // });
+
     var places = req.body.places;
     placesLength = places.length;
     console.log(places);
@@ -78,13 +94,18 @@ app.post("/results.html", function (req, res) {
         if(placesLength == count){
             console.log(coordinates, places);
             //Write function calls here
-            uber.estimates.getPriceForRoute(coordinates[0].latitude, coordinates[0].longitude, coordinates[1].latitude, coordinates[1].longitude, function (err, response) {
+            //---------
+            //getting weather for all places
+            for (i = 0; i < places.length; i++) {
+                var place = places[i];
+                weather.getWeather(place);
+            }
+           /* uber.estimates.getPriceForRoute(coordinates[0].latitude, coordinates[0].longitude, coordinates[1].latitude, coordinates[1].longitude, function (err, response) {
                 console.log(response);
-            });
-
+            });*/
         }
     });
-
+    console.log(req.body);
     res.sendFile(path.join(__dirname+"/views/results.html"));
 });
 
@@ -96,5 +117,7 @@ app.get('/', function(request, response) {
 app.listen(5000, function () {
     console.log("Path Finder started at port 5000");
 
+
 });
+
 
