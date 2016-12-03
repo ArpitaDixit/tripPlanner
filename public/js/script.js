@@ -84,7 +84,7 @@ $(function () {
       boxCount++;
 
         var div = $("<div />");
-        div.html('<input type="text" class="form-control address" id="pac-input'+ boxCount +'" onfocus="getPlaces(this.id)" placeholder="New Destination" />&nbsp;' +
+        div.html('<input type="text" class="form-control address" id="pac-input'+ boxCount +'" onfocus="getPlaces(this.id)" name="places" placeholder="New Destination" />&nbsp;' +
             '<input type="button" value="X" class="btn btn-primary text-center remove" id="remove'+boxCount +'" />');
         $(".address-boxes").append(div);
 
@@ -98,5 +98,11 @@ $(function () {
       console.log("Hey");
       $.get("results");
     });
+
+    $('#trip-form').submit(function(){ //listen for submit event
+
+          $("#trip-form").append("<input name='place1' value='"+23.51+ " "+ 45.6+"'>");
+            
+        });
 
 });

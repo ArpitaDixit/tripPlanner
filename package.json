@@ -10,6 +10,7 @@
   "dependencies": {
     "express": "^4.14.0",
     "express-ejs-layouts": "^2.2.0",
+    "node-lyft": "0.0.2",
     "node-uber": "^0.9.7"
   },
   "devDependencies": {},
