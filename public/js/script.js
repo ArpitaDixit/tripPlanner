@@ -20,7 +20,7 @@ function initMap() {
           calculateAndDisplayRoute(directionsService, directionsDisplay);
         });                  
       }
-//AIzaSyDFGOGmf-1DTREZJoP9Si319k1hnUWZXTw google map key
+//AIzaSyAoCAFqDerIseHLM0unZJ1nGXHSUVjzd7Y google map key
 function getPlaces(pac_input){
    var input = document.getElementById(pac_input);
         var options = {
