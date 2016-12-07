@@ -1,0 +1,78 @@
+<%- contentFor('results') %>
+<<<<<<< HEAD
+	<link rel="stylesheet" type="text/css" href="/css/result_style.css">       
+    </script>
+</head>
+<body>
+	<div class="container text-center">
+		<h1>Trip Planner</h1>
+		<p class="lead sub-heading">Plan your trip to be cheapest</p>
+	</div>
+
+	<div id="rows"><%=sorted.length-1%></div>
+	<div class="container">
+		<ul class="nav nav-tabs">
+	    <li class="active"><a href="#">Overview</a></li>
+	    <li class="inactive"><a href="#">Weather</a></li>
+	    <li class="inactive"><a href="#">Menu 2</a></li>
+	    <li class="inactive"><a href="#">Menu 3</a></li>
+	</ul>
+	</div>
+	
+	
+	<div class="container details text-primary text-center">
+		<div class="row table-head">
+			<div class="col-xs-3"><%=sorted[0]%></div>
+			<div class="col-xs-3"><img src="uber.png"></div>
+			<div class="col-xs-3"><img src="lyft.png"></div>
+			<div class="col-xs-3">What should you select</div>
+		</div>
+		<% for (var i=1; i < sorted.length; i++){ %>
+		<div class="row table-body">
+			<div class="col-xs-3"><%=sorted[i]%></div>
+			<div class="col-xs-3" id="uber<%=i%>"><%=uber[i-1]%></div>
+			<div class="col-xs-3" id="lyft<%=i%>"><%=lyft[i-1]%></div>
+			<div class="col-xs-3" id="result<%=i%>"></div>
+		</div>
+		<%}%>
+		<div class="row table-footer">
+			<div class="col-xs-3">Total</div>
+			<div class="col-xs-offset-6 col-xs-3" id="total"></div>
+		</div>
+
+	</div>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+	<script type="text/javascript" src="js/results_script.js"></script>
+		<!-- </div>
+=======
+	
+	<div class="container details text-primary">
+		
+		<table class="table table-bordered">
+		<tr>
+>>>>>>> origin/master
+			<% for (s of sorted){ %>
+			<td><%= s %></td>
+			<% } %>
+
+		</tr>
+		<tr>
+			<td>Uber</td>
+			<% for (u of uber){ %>
+			<td><%= u %></td>
+			<% } %>
+		</tr>
+		<tr>
+			<td>Lyft</td>
+			<% for (l of lyft){ %>
+			<td><%= l %></td>
+			<% } %>
+		</tr>
+		</table>
+<<<<<<< HEAD
+	</div> -->
+=======
+	</div>
+>>>>>>> origin/master
