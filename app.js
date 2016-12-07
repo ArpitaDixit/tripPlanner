@@ -15,6 +15,8 @@ var mysql      = require('mysql');
 var coordinates = [];
 var placesLength;
 var count = 0;
+var wcount=0;
+var weatherResult=[];
 var uberCount = 0;
 var uberPrices=[];
 
@@ -22,7 +24,7 @@ const myEmitter = new EventEmitter();
 const uberEmitter = new EventEmitter();
 const myEmitterXL=new EventEmitter();
 const lyftEmitter=new EventEmitter();
-
+const weatherEmitter = new EventEmitter();
 var options = {
     provider: 'google',
     // Optional depending on the providers
@@ -132,6 +134,16 @@ app.post("/results.html", function (req, res) {
         });
         console.log("outside geo");
     }
+    for (i = 0; i < places.length; i++) {
+                console.log("places wea");
+                var place = places[i];
+                var data=weather.getWeather(place);
+                console.log(data);
+                weatherResult.push(data);
+                wcount++;
+                weatherEmitter.emit('weatherCaught', weatherResult, wcount);
+                
+            }
     //connection.query('SELECT 1 + 1 AS solution', function(err, res) {
   //if (err) throw err;
 
@@ -340,6 +352,12 @@ app.post("/results.html", function (req, res) {
             res.render('pages/results',{ sorted: sortedPlacesUberX});
         }
     });
+    weatherEmitter.on('weatherCaught', function(weatherResult, wcount) {
+                 if(placesLength == wcount){
+                 console.log("weather here");  
+                console.log(weatherResult);  
+                }
+            });
     myEmitter.on('coordinatesCaught', function(coordinates, count) {
         if(placesLength == count){
             //console.log(coordinates, places);
@@ -470,13 +488,8 @@ app.post("/results.html", function (req, res) {
             
             //getting weather for all places
             console.log(uberPrices);  
-            for (i = 0; i < places.length; i++) {
-                var place = places[i];
-                weather.getWeather(place);
-
-            }
            
-
+            
         }
     });
    
