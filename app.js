@@ -40,7 +40,7 @@ app.use(bodyParser.json());
 var uber = new Uber({
 
 /*
->>>>>>> origin/master
+ origin/master
     client_id: 'lGMT26zFN4YbgRPNSWR17uzAmWAo6IoT',
     client_secret: 'nTekbYYzAgC2KhZc7q4e9aPWVO5kwIXig_Bq8jZN',
     server_token: 'jvHZM2BCWNP4IcpRX2crSOoX8HpXb9vbCqCV9IMf',
@@ -50,7 +50,6 @@ var uber = new Uber({
     sandbox: true // optional, defaults to false
 <<<<<<< HEAD
 
-=======
 */
      client_id: 'dLLuaHaTUPqusPd5oDsk4dNxXLAq7P9y',
      client_secret: 'RLFm-on4Eyg7QKtQ1ne3pIEpLVi4FCqrCSAwzNDe',
@@ -121,7 +120,6 @@ app.post("/results.html", function (req, res) {
     var totalcostX;
     myEmitter.on('priceEstimatedUberX',function(response,i,j,places,temp){
         /* if(typeof cost[i]=="object"){
-
          }else{
          cost[i]=new Array();
          }*/
@@ -207,7 +205,6 @@ app.post("/results.html", function (req, res) {
     var sortedPlacesVarLyft;
     lyftEmitter.on('priceEstimated',function(response,i,j,places,tempLyft){
         /* if(typeof cost[i]=="object"){
-
          }else{
          cost[i]=new Array();
          }*/
@@ -272,7 +269,6 @@ app.post("/results.html", function (req, res) {
     var sortedPlacesUberXL=[];
     myEmitterXL.on('priceEstimatedUberXL',function(response,i,j,places,tempXL){
         /* if(typeof cost[i]=="object"){
-
          }else{
          cost[i]=new Array();
          }*/
@@ -320,7 +316,6 @@ app.post("/results.html", function (req, res) {
         if(placesLength == count){
             //console.log(coordinates, places);
             //Write function calls here
-            //---------
             //getting uber price
             var index=[]
             for (var i = 0; i < places.length; i++) {
