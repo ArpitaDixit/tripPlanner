@@ -376,7 +376,15 @@ app.post("/results.html", function (req, res) {
                                         postAuthBody = postAuthBody || {};
                                         postAuthBody.meta = {success: true};
                                         tempLyft--;
-                                        lyftEmitter.emit('priceEstimated', postAuthBody.cost_estimates[2].estimated_cost_cents_max, i,j,places,tempLyft);
+                                        var type=0;
+                                        if(numOfPeople<=2){
+                                            type=1;
+                                        }else if(numOfPeople>2 && numOfPeople<=4){
+                                            type=2;
+                                        }else{
+                                            type=0;
+                                        }
+                                        lyftEmitter.emit('priceEstimated', postAuthBody.cost_estimates[type].estimated_cost_cents_max, i,j,places,tempLyft);
                                         //console.log(postAuthBody.cost_estimates[2].estimated_cost_cents_max);
                                     }
                                 };
@@ -390,7 +398,15 @@ app.post("/results.html", function (req, res) {
                             //console.log("cost["+i+"]["+j+"]:"+cost[i][j]);
                             temp--;
                             tempXL--;
-                            myEmitter.emit('priceEstimatedUberX', response.prices[1].high_estimate, i,j,places,temp);
+                            var typeX=0;
+                            if(numOfPeople<=2){
+                                typeX=0;
+                            }else if(numOfPeople>2 && numOfPeople<=4){
+                                typeX=1;
+                            }else{
+                                typeX=2;
+                            }
+                            myEmitter.emit('priceEstimatedUberX', response.prices[typeX].high_estimate, i,j,places,temp);
                             //myEmitterXL.emit('priceEstimatedUberXL', response.prices[1].high_estimate, i,j,places,tempXL);
                         });
                         //cost[i][j]=temp;
