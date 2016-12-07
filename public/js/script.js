@@ -84,8 +84,8 @@ $(function () {
       boxCount++;
 
         var div = $("<div />");
-        div.html('<input type="text" class="form-control address" id="pac-input'+ boxCount +'" onfocus="getPlaces(this.id)" name="places" placeholder="New Destination" />&nbsp;' +
-            '<input type="button" value="X" class="btn btn-primary text-center remove" id="remove'+boxCount +'" />');
+        div.html('<inline><input type="text" class="form-control address" id="pac-input'+ boxCount +'" onfocus="getPlaces(this.id)" name="places" placeholder="New Destination" />' +
+            '<input type="button" value="X" class="btn btn-primary text-center remove" id="remove'+boxCount +'" /></inline>');
         $(".address-boxes").append(div);
 
     });    

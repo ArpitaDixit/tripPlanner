@@ -15,12 +15,10 @@ exports.getRideTypes = function (req, res, next) {
         uri: config.LYFT_API_URI + '/v1/ridetypes',
         json: true,
         qs: {lat: req.query.lat, lng: req.query.lng}
-    }, function (req, res) {
-        response = res.body;
     });
-};
+}
 
-var requestWithBearerToken = function (res, options, callback) {
+exports.requestWithBearerToken = function (res, options, callback) {
     /* begin: pre-auth request */
     request({
         method: 'POST',
@@ -50,9 +48,12 @@ var requestWithBearerToken = function (res, options, callback) {
                     } else {
                         postAuthBody = postAuthBody || {};
                         postAuthBody.meta = {success: true};
+                        console.log(postAuthBody);
                         res
                             .status(postAuthResponse.statusCode)
                             .json(postAuthBody);
+
+
                     }
                 };
             request(options, callback);
