@@ -76,9 +76,9 @@ var uber = new Uber({
 
 var connection = mysql.createConnection({
   host     : 'localhost',
-  user     : 'cmpe_273',
-  password : 'cmpe_273',
-  database : 'cmpe_273'
+  user     : 'root',
+  password : 'abcd',
+  database : 'my_db'
 });
 connection.connect();
 app.get('/api/callback', function(request, response) {
@@ -96,7 +96,10 @@ app.get('/api/callback', function(request, response) {
 });
 
 app.get("/success", function (req, res) {
-
+coordinates = [];
+placesLength;
+count = 0;
+uberPrices=[];
     res.render('pages/index');
 });
 
@@ -120,16 +123,19 @@ app.post("/results.html", function (req, res) {
 
         var place = places[i];
         geocoder.geocode(place, function(err, res) {
+             console.log("inside geo");
             var coordinate={latitude:res[0]["latitude"],longitude:res[0]["longitude"]};
             coordinates.push(coordinate);
+            console.log(coordinates);
             count++;
             myEmitter.emit('coordinatesCaught', coordinates, count);
         });
+        console.log("outside geo");
     }
     //connection.query('SELECT 1 + 1 AS solution', function(err, res) {
   //if (err) throw err;
 
-  console.log('The solution is: ', res[0].solution);
+  //console.log('The solution is: ', res[0].solution);
 //});
     var cost=new Array();
     var sortedCostUberX=[];
@@ -147,7 +153,7 @@ app.post("/results.html", function (req, res) {
         console.log("insidecost["+i+"]["+j+"]:"+cost[i][j]);
         console.log("places"+places.length+"i"+i);
         if(temp==0){
-            console.log("Inside");
+            console.log("Inside uberx thing");
             for (var i = 0; i < cost.length; i++) {
                 oricostX[i]=new Array();
                 for (var j = 0; j < cost[i].length; j++) {
@@ -193,6 +199,7 @@ app.post("/results.html", function (req, res) {
                 min=Number.POSITIVE_INFINITY;
                 l=minM;
             }
+            console.log("inside sortedplaces");
             console.log(sortedPlacesUberX);
             if(totalcostX<=totalcostLyft){
                 var sortedLyft=[];
@@ -457,47 +464,22 @@ app.post("/results.html", function (req, res) {
                         //cost[i][j]=temp;
                     }
                 });
-
+            
             });
-
-            /* var price;
-             var i=0;
-             for (i = 1; i <= coordinates.length-1; i++) {
-                 var src = coordinates[i-1];
-                 console.log("src");
-                 console.log(src);
-                 var dest = coordinates[i];
-                 console.log("des");
-                 console.log(dest);
-                 price=UberModule.getUberPrice(src,dest);
-                 uberPrices.push(price);
-                 /*uberCount++;
-                 uberEmitter.emit('gotPrice', uberPrices, uberCount);
-             } */
-
-            /*
-            uberEmitter.on('gotPrice', function(uberPrices, uberCount) {
-            if(coordinates.length == uberCount){
-            console.log("123");
-            console.log(uberPrices, places);
-            }
-            });*/
+        
             
             //getting weather for all places
             console.log(uberPrices);  
             for (i = 0; i < places.length; i++) {
                 var place = places[i];
                 weather.getWeather(place);
+
             }
+           
 
-
-           /* uber.estimates.getPriceForRoute(coordinates[0].latitude, coordinates[0].longitude, coordinates[1].latitude, coordinates[1].longitude, function (err, response) {
-                console.log(response);
-            });*/
         }
     });
-    //console.log(req.body);
-    //res.sendFile(path.join(__dirname+"/views/results.html"));
+   
 });
 
 app.get('/', function(request, response) {
