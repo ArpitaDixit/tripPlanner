@@ -11,7 +11,7 @@ var apiLyftController   = require('./controllers/api/lyft');
 var Lyft = require('node-lyft');
 var expressLayouts=require('express-ejs-layouts');
 var request = require('request');
-var mysql      = require('mysql');
+//var mysql      = require('mysql');
 var coordinates = [];
 var placesLength;
 var count = 0;
@@ -76,13 +76,13 @@ var uber = new Uber({
 
 });
 
-var connection = mysql.createConnection({
+/*var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : 'abcd',
   database : 'my_db'
 });
-connection.connect();
+connection.connect();*/
 app.get('/api/callback', function(request, response) {
     uber.authorization({
         authorization_code: request.query.code
@@ -124,6 +124,7 @@ app.post("/results.html", function (req, res) {
         console.log("places");
 
         var place = places[i];
+
         geocoder.geocode(place, function(err, res) {
              console.log("inside geo");
             var coordinate={latitude:res[0]["latitude"],longitude:res[0]["longitude"]};
@@ -154,6 +155,7 @@ app.post("/results.html", function (req, res) {
     var sortedPlacesUberX=[];
     var oricostX=[];
     var totalcostX;
+    var sortedPlacesVarX;
     myEmitter.on('priceEstimatedUberX',function(response,i,j,places,temp){
         /* if(typeof cost[i]=="object"){
 
@@ -191,8 +193,7 @@ app.post("/results.html", function (req, res) {
                     }else{
 
                         if(cost[l][m]<min){
-                            sortedCostUberX[incr]=cost[l][m];
-                            totalcostX+=cost[l][m];
+
                             min=cost[l][m];
                             minL=l;
                             minM=m;
@@ -201,6 +202,8 @@ app.post("/results.html", function (req, res) {
                 }
                 //var t=places[incr+1];
                 sortedPlacesUberX[incr+1]=places[minM];
+                sortedCostUberX[incr]=cost[l][minM];
+                totalcostX+=cost[l][minM];
                 sortedPlacesVarX[incr+1]=minM;
                 //places[m]=t;
                 for (var i = 0; i < places.length; i++) {
@@ -280,8 +283,7 @@ app.post("/results.html", function (req, res) {
                     }else{
 
                         if(costLyft[l][m]<min){
-                            sortedCostLyft[incr]=costLyft[l][m]/100;
-                            totalcostLyft+=costLyft[l][m]/100;
+
                             min=costLyft[l][m];
                             minL=l;
                             minM=m;
@@ -291,6 +293,8 @@ app.post("/results.html", function (req, res) {
                 //var t=places[incr+1];
                 sortedPlacesLyft[incr+1]=places[minM];
                 sortedPlacesVarLyft[incr+1]=minM;
+                sortedCostLyft[incr]=costLyft[l][minM]/100;
+                totalcostLyft+=costLyft[l][minM]/100;
                 //places[m]=t;
                 for (var i = 0; i < places.length; i++) {
                     costLyft[l][i]=Number.POSITIVE_INFINITY;
@@ -500,7 +504,7 @@ app.get('/', function(request, response) {
     response.redirect(url);
 });
 
-connection.end();
+//connection.end();
 
 app.listen(5000, function () {
     console.log("Path Finder started at port 5000");
