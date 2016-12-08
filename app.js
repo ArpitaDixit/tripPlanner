@@ -11,12 +11,9 @@ var apiLyftController   = require('./controllers/api/lyft');
 var Lyft = require('node-lyft');
 var expressLayouts=require('express-ejs-layouts');
 var request = require('request');
-var mysql      = require('mysql');
 var coordinates = [];
 var placesLength;
 var count = 0;
-var wcount=0;
-var weatherResult=[];
 var uberCount = 0;
 var uberPrices=[];
 
@@ -24,7 +21,7 @@ const myEmitter = new EventEmitter();
 const uberEmitter = new EventEmitter();
 const myEmitterXL=new EventEmitter();
 const lyftEmitter=new EventEmitter();
-const weatherEmitter = new EventEmitter();
+
 var options = {
     provider: 'google',
     // Optional depending on the providers
@@ -76,13 +73,6 @@ var uber = new Uber({
 
 });
 
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'abcd',
-  database : 'my_db'
-});
-connection.connect();
 app.get('/api/callback', function(request, response) {
     uber.authorization({
         authorization_code: request.query.code
@@ -98,10 +88,7 @@ app.get('/api/callback', function(request, response) {
 });
 
 app.get("/success", function (req, res) {
-coordinates = [];
-placesLength;
-count = 0;
-uberPrices=[];
+
     res.render('pages/index');
 });
 
@@ -111,44 +98,23 @@ app.post("/results.html", function (req, res) {
     // });    
     var places = req.body.places;
     placesLength = places.length;
-    console.log(places);
+    
     //number of people
     var numOfPeople=req.body.noppl;
     var loworhigh=req.body.low;
-    console.log(numOfPeople);
-    console.log(loworhigh);
-
-    console.log("hello")
+    
 
     for (i = 0; i < places.length; i++) {
-        console.log("places");
+    
 
         var place = places[i];
         geocoder.geocode(place, function(err, res) {
-             console.log("inside geo");
             var coordinate={latitude:res[0]["latitude"],longitude:res[0]["longitude"]};
             coordinates.push(coordinate);
-            console.log(coordinates);
             count++;
             myEmitter.emit('coordinatesCaught', coordinates, count);
         });
-        console.log("outside geo");
     }
-    for (i = 0; i < places.length; i++) {
-                console.log("places wea");
-                var place = places[i];
-                var data=weather.getWeather(place);
-                console.log(data);
-                weatherResult.push(data);
-                wcount++;
-                weatherEmitter.emit('weatherCaught', weatherResult, wcount);
-                
-            }
-    //connection.query('SELECT 1 + 1 AS solution', function(err, res) {
-  //if (err) throw err;
-
-  //console.log('The solution is: ', res[0].solution);
-//});
     var cost=new Array();
     var sortedCostUberX=[];
     var sortedPlacesUberX=[];
@@ -162,10 +128,9 @@ app.post("/results.html", function (req, res) {
          }*/
 
         cost[i][j]=response;
-        console.log("insidecost["+i+"]["+j+"]:"+cost[i][j]);
-        console.log("places"+places.length+"i"+i);
+    
         if(temp==0){
-            console.log("Inside uberx thing");
+    
             for (var i = 0; i < cost.length; i++) {
                 oricostX[i]=new Array();
                 for (var j = 0; j < cost[i].length; j++) {
@@ -211,8 +176,7 @@ app.post("/results.html", function (req, res) {
                 min=Number.POSITIVE_INFINITY;
                 l=minM;
             }
-            console.log("inside sortedplaces");
-            console.log(sortedPlacesUberX);
+            
             if(totalcostX<=totalcostLyft){
                 var sortedLyft=[];
 
@@ -249,11 +213,9 @@ app.post("/results.html", function (req, res) {
          }*/
 
         costLyft[i][j]=response;
-        console.log("insidecostXL["+i+"]["+j+"]:"+costLyft[i][j]);
-        console.log("places"+places.length+"i"+i);
+        
         if(tempLyft==0){
-            console.log("Inside");
-
+           
             for (var i = 0; i < costLyft.length; i++) {
                 oricostLyft[i]=new Array();
                 for (var j = 0; j < costLyft[i].length; j++) {
@@ -300,7 +262,7 @@ app.post("/results.html", function (req, res) {
                 min=Number.POSITIVE_INFINITY;
                 l=minM;
             }
-            console.log(sortedPlacesLyft);
+           
         }
     });
     var costXL=new Array();
@@ -314,10 +276,9 @@ app.post("/results.html", function (req, res) {
          }*/
 
         costXL[i][j]=response;
-        console.log("insidecostXL["+i+"]["+j+"]:"+costXL[i][j]);
-        console.log("places"+places.length+"i"+i);
+        
         if(tempXL==0){
-            console.log("Inside");
+            
             var min=Number.POSITIVE_INFINITY;
             var minL=coordinates[0].latitude;
             var minM=coordinates[0].longitude;
@@ -348,16 +309,10 @@ app.post("/results.html", function (req, res) {
                 min=Number.POSITIVE_INFINITY;
                 l=minM;
             }
-            console.log(sortedPlacesUberXL);
+            
             res.render('pages/results',{ sorted: sortedPlacesUberX});
         }
     });
-    weatherEmitter.on('weatherCaught', function(weatherResult, wcount) {
-                 if(placesLength == wcount){
-                 console.log("weather here");  
-                console.log(weatherResult);  
-                }
-            });
     myEmitter.on('coordinatesCaught', function(coordinates, count) {
         if(placesLength == count){
             //console.log(coordinates, places);
@@ -426,81 +381,81 @@ app.post("/results.html", function (req, res) {
                                         }else{
                                             type=0;
                                         }
-                                        if(loworhigh){
-                                            lyftEmitter.emit('priceEstimated', postAuthBody.cost_estimates[type].estimated_cost_cents_min, i,j,places,tempLyft);
-
-                                        }else{
-                                            lyftEmitter.emit('priceEstimated', postAuthBody.cost_estimates[type].estimated_cost_cents_max, i,j,places,tempLyft);
-
-                                        }
+                                        lyftEmitter.emit('priceEstimated', postAuthBody.cost_estimates[type].estimated_cost_cents_max, i,j,places,tempLyft);
                                         //console.log(postAuthBody.cost_estimates[2].estimated_cost_cents_max);
                                     }
                                 };
                                 request(options, callback);
                             }
                         });
-                        if(loworhigh){
-                            uber.estimates.getPriceForRoute(coordinates[i].latitude, coordinates[i].longitude, coordinates[j].latitude, coordinates[j].longitude, function (err, response) {
-                                //console.log(response.prices[0].low_estimate);
-                                //temp=response.prices[0].low_estimate;
-                                //cost[i][j]=response.prices[0].low_estimate;
-                                //console.log("cost["+i+"]["+j+"]:"+cost[i][j]);
-                                temp--;
-                                tempXL--;
-                                var typeX=0;
-                                if(numOfPeople<=2){
-                                    typeX=0;
-                                }else if(numOfPeople>2 && numOfPeople<=4){
-                                    typeX=1;
-                                }else{
-                                    typeX=2;
-                                }
-                                myEmitter.emit('priceEstimatedUberX', response.prices[typeX].low_estimate, i,j,places,temp);
-                                //myEmitterXL.emit('priceEstimatedUberXL', response.prices[1].high_estimate, i,j,places,tempXL);
-                            });
-                        }else {
-                            uber.estimates.getPriceForRoute(coordinates[i].latitude, coordinates[i].longitude, coordinates[j].latitude, coordinates[j].longitude, function (err, response) {
-                                //console.log(response.prices[0].low_estimate);
-                                //temp=response.prices[0].low_estimate;
-                                //cost[i][j]=response.prices[0].low_estimate;
-                                //console.log("cost["+i+"]["+j+"]:"+cost[i][j]);
-                                temp--;
-                                tempXL--;
-                                var typeX=0;
-                                if(numOfPeople<=2){
-                                    typeX=0;
-                                }else if(numOfPeople>2 && numOfPeople<=4){
-                                    typeX=1;
-                                }else{
-                                    typeX=2;
-                                }
-                                myEmitter.emit('priceEstimatedUberX', response.prices[typeX].high_estimate, i,j,places,temp);
-                                //myEmitterXL.emit('priceEstimatedUberXL', response.prices[1].high_estimate, i,j,places,tempXL);
-                            });
-                        }
-
+                        uber.estimates.getPriceForRoute(coordinates[i].latitude, coordinates[i].longitude, coordinates[j].latitude, coordinates[j].longitude, function (err, response) {
+                            //console.log(response.prices[0].low_estimate);
+                            //temp=response.prices[0].low_estimate;
+                            //cost[i][j]=response.prices[0].low_estimate;
+                            //console.log("cost["+i+"]["+j+"]:"+cost[i][j]);
+                            temp--;
+                            tempXL--;
+                            var typeX=0;
+                            if(numOfPeople<=2){
+                                typeX=0;
+                            }else if(numOfPeople>2 && numOfPeople<=4){
+                                typeX=1;
+                            }else{
+                                typeX=2;
+                            }
+                            myEmitter.emit('priceEstimatedUberX', response.prices[typeX].high_estimate, i,j,places,temp);
+                            //myEmitterXL.emit('priceEstimatedUberXL', response.prices[1].high_estimate, i,j,places,tempXL);
+                        });
                         //cost[i][j]=temp;
                     }
                 });
-            
+
             });
-        
+
+            /* var price;
+             var i=0;
+             for (i = 1; i <= coordinates.length-1; i++) {
+                 var src = coordinates[i-1];
+                 console.log("src");
+                 console.log(src);
+                 var dest = coordinates[i];
+                 console.log("des");
+                 console.log(dest);
+                 price=UberModule.getUberPrice(src,dest);
+                 uberPrices.push(price);
+                 /*uberCount++;
+                 uberEmitter.emit('gotPrice', uberPrices, uberCount);
+             } */
+
+            /*
+            uberEmitter.on('gotPrice', function(uberPrices, uberCount) {
+            if(coordinates.length == uberCount){
+            console.log("123");
+            console.log(uberPrices, places);
+            }
+            });*/
             
             //getting weather for all places
-            console.log(uberPrices);  
-           
-            
+              
+            for (i = 0; i < places.length; i++) {
+                var place = places[i];
+                weather.getWeather(place);
+            }
+
+
+           /* uber.estimates.getPriceForRoute(coordinates[0].latitude, coordinates[0].longitude, coordinates[1].latitude, coordinates[1].longitude, function (err, response) {
+                console.log(response);
+            });*/
         }
     });
-   
+    //console.log(req.body);
+    //res.sendFile(path.join(__dirname+"/views/results.html"));
 });
 
 app.get('/', function(request, response) {
     var url = uber.getAuthorizeUrl(['history','profile', 'request', 'places', 'all_trips']);
     response.redirect(url);
 });
-
-connection.end();
 
 app.listen(5000, function () {
     console.log("Path Finder started at port 5000");

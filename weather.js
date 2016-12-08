@@ -15,7 +15,7 @@ function getWeather(place){
 		        try {
 		          	//Parse the data
 		          	var weatherDetails = JSON.parse(body);
-		          	var data = filterJSON(weatherDetails, place);
+		          	data = filterJSON(weatherDetails, place);
 		          	weatherResult.push(data);
 		          	//Reading the file Synchronously
 					/*html = fs.readFileSync('views/weather.html');
@@ -28,8 +28,8 @@ function getWeather(place){
 					response.write(html);
 					response.end();
 				*/	
-				return data;
-				//console.log(weatherResult);
+				
+				console.log(weatherResult);
 		        } catch(error) {
 		          //Parse Error
 		          console.log("hiiiiii");

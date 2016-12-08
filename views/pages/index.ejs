@@ -1,4 +1,12 @@
+
 <%- contentFor('index') %>
+<link rel="stylesheet" type="text/css" href="/css/style.css">       
+    </script>
+</head>
+<body>
+	
+
+	
 <div class="container details text-primary">
 		<div class="row text-center customize-heading">
 			<h3>Customize your options</h3>
@@ -13,9 +21,7 @@
 					</div>
 					<button type="button" class="btn btn-primary text-center add-button" ><strong>+</strong> new Destination</button>									
 				</div>
-				<div class="col-sm-2 text-center text-muted options"  value="true">
-					<p>Weather Report</p>
-					<input type="checkbox" class="option-button" checked data-toggle="toggle" name="weather" value="true">
+				<div class="col-sm-2 text-center text-muted options"  value="true">					
 					<p class="option-text">Cost estimate</p>
 					<input type="checkbox" class="option-button" checked data-toggle="toggle" data-on="Low" data-off="High" name="low" value="true">				
 					<p class="option-text">Number of people riding</p>
@@ -31,20 +37,19 @@
 					  </div>
 					  </select>
 					</div>
-					<p><button type="button" id="submit" class="btn btn-primary text-center go-button">Fetch Results</button><p>
+					<p><button type="button" id="submit" class="btn btn-primary text-center go-button">Get optimized route</button><p>
 					<p><button type="sumbit" id="res" class="btn btn-primary text-center result-button">Get Results</button><p>
 				</div>
 				<div class="col-sm-6" id="map">				
 				</div>
 			</div>
 		</form>
-
 	</div>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 	<script type="text/javascript" src="/js/script.js"></script>
-	<script type="text/javascript" src="/js/dropdown.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAoCAFqDerIseHLM0unZJ1nGXHSUVjzd7Y&callback=initMap&libraries=places"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCA3LQfSoedWkRWhxJayT825G2lnWY-zHI&callback=initMap&libraries=places"></script>
 	
-<!--AIzaSyAoCAFqDerIseHLM0unZJ1nGXHSUVjzd7Y google map key-->
+
+	//AIzaSyBmqf6tVGqvMYUZJNKgetD9w2CY-n-O6_0
