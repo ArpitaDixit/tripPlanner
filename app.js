@@ -443,7 +443,7 @@ app.post("/results.html", function (req, res) {
                                 request(options, callback);
                             }
                         });
-                        if(loworhigh){
+
                             uber.estimates.getPriceForRoute(coordinates[i].latitude, coordinates[i].longitude, coordinates[j].latitude, coordinates[j].longitude, function (err, response) {
                                 //console.log(response.prices[0].low_estimate);
                                 //temp=response.prices[0].low_estimate;
@@ -459,29 +459,15 @@ app.post("/results.html", function (req, res) {
                                 }else{
                                     typeX=2;
                                 }
-                                myEmitter.emit('priceEstimatedUberX', response.prices[typeX].low_estimate, i,j,places,temp);
-                                //myEmitterXL.emit('priceEstimatedUberXL', response.prices[1].high_estimate, i,j,places,tempXL);
-                            });
-                        }else {
-                            uber.estimates.getPriceForRoute(coordinates[i].latitude, coordinates[i].longitude, coordinates[j].latitude, coordinates[j].longitude, function (err, response) {
-                                //console.log(response.prices[0].low_estimate);
-                                //temp=response.prices[0].low_estimate;
-                                //cost[i][j]=response.prices[0].low_estimate;
-                                //console.log("cost["+i+"]["+j+"]:"+cost[i][j]);
-                                temp--;
-                                tempXL--;
-                                var typeX=0;
-                                if(numOfPeople<=2){
-                                    typeX=0;
-                                }else if(numOfPeople>2 && numOfPeople<=4){
-                                    typeX=1;
+                                if(loworhigh){
+                                    myEmitter.emit('priceEstimatedUberX', response.prices[typeX].low_estimate, i,j,places,temp);
+
                                 }else{
-                                    typeX=2;
+                                    myEmitter.emit('priceEstimatedUberX', response.prices[typeX].high_estimate, i,j,places,temp);
+
                                 }
-                                myEmitter.emit('priceEstimatedUberX', response.prices[typeX].high_estimate, i,j,places,temp);
-                                //myEmitterXL.emit('priceEstimatedUberXL', response.prices[1].high_estimate, i,j,places,tempXL);
                             });
-                        }
+
 
                         //cost[i][j]=temp;
                     }
