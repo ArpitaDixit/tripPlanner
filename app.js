@@ -18,8 +18,19 @@ var count = 0;
 var wcount=0;
 var weatherResult=[];
 var uberCount = 0;
-var uberPrices=[];
-
+//var uberPrices=[];
+var cost=new Array();
+var sortedCostUberX=[];
+var sortedPlacesUberX=[];
+var oricostX=[];
+var totalcostX;
+var sortedPlacesVarX;
+var costLyft=new Array();
+var sortedCostLyft=[];
+var sortedPlacesLyft=[];
+var oricostLyft=[];
+var totalcostLyft;
+var sortedPlacesVarLyft;
 const myEmitter = new EventEmitter();
 const uberEmitter = new EventEmitter();
 const myEmitterXL=new EventEmitter();
@@ -101,7 +112,18 @@ app.get("/success", function (req, res) {
 coordinates = [];
 placesLength;
 count = 0;
-uberPrices=[];
+     cost=new Array();
+     sortedCostUberX=[];
+     sortedPlacesUberX=[];
+     oricostX=[];
+     totalcostX=0;
+     sortedPlacesVarX=[];
+     costLyft=new Array();
+     sortedCostLyft=[];
+     sortedPlacesLyft=[];
+     oricostLyft=[];
+     totalcostLyft=0;
+     sortedPlacesVarLyft=[];
     res.render('pages/index');
 });
 
@@ -150,12 +172,7 @@ app.post("/results.html", function (req, res) {
 
   //console.log('The solution is: ', res[0].solution);
 //});
-    var cost=new Array();
-    var sortedCostUberX=[];
-    var sortedPlacesUberX=[];
-    var oricostX=[];
-    var totalcostX;
-    var sortedPlacesVarX;
+
     myEmitter.on('priceEstimatedUberX',function(response,i,j,places,temp){
         /* if(typeof cost[i]=="object"){
 
@@ -178,8 +195,7 @@ app.post("/results.html", function (req, res) {
                     }
                 }
             }
-            totalcostX=0;
-            sortedPlacesVarX=[];
+            
             sortedPlacesVarX[0]=0;
             var min=Number.POSITIVE_INFINITY;
             var minL=coordinates[0].latitude;
@@ -238,12 +254,7 @@ app.post("/results.html", function (req, res) {
         }
     });
 
-    var costLyft=new Array();
-    var sortedCostLyft=[];
-    var sortedPlacesLyft=[];
-    var oricostLyft=[];
-    var totalcostLyft;
-    var sortedPlacesVarLyft;
+
     lyftEmitter.on('priceEstimated',function(response,i,j,places,tempLyft){
         /* if(typeof cost[i]=="object"){
 
@@ -267,8 +278,7 @@ app.post("/results.html", function (req, res) {
                     }
                 }
             }
-            totalcostLyft=0;
-            sortedPlacesVarLyft=[];
+
             sortedPlacesVarLyft[0]=0;
 
             var min=Number.POSITIVE_INFINITY;
@@ -477,7 +487,7 @@ app.post("/results.html", function (req, res) {
         
             
             //getting weather for all places
-            console.log(uberPrices);  
+             
            
             
         }
