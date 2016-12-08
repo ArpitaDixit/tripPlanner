@@ -28,14 +28,8 @@ $(document).ready(function(){
     	 var lyftPrice = $(lyftPriceID).html();
     	 console.log(uberPrice);
     	 console.log(lyftPrice);
-<<<<<<< HEAD
          lyftPrice=parseFloat(lyftPrice);
          uberPrice=parseFloat(uberPrice);
-=======
-         uberPrice=parseFloat(uberPrice);
-
-         lyftPrice=parseFloat(lyftPrice);
->>>>>>> origin/master
     	 if(uberPrice<lyftPrice){
     	 	$(resultPriceID).html(uberPrice + '<img src="uber.png">');
     	 	total = parseFloat(total) + parseFloat(uberPrice);
